@@ -8,16 +8,11 @@ int main()
 {
     int width = 1000;
     int height = width;
-    int boidCount = 50;
+    int boidCount = 25;
 
     sf::RenderWindow window(sf::VideoMode(width, height), "SFML works!");
 
-    std::cout << "window created\n";
-
     Flock *flock = new Flock(boidCount, width, height);
-    std::cout << "flock created\n";
-
-    int loop = 0;
 
     while (window.isOpen())
     {
@@ -27,14 +22,14 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-
+        
         window.clear();
-
-        flock->update();
+        
+        // flock->update();
 
         for (int i = 0; i < boidCount; i++)
         {
-            window.draw(flock->getBoid(i)->draw());
+            // window.draw(flock->getBoid(i)->draw());
         }
 
         window.display();

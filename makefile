@@ -12,3 +12,6 @@ main: main.cpp
 
 link:
 	g++ boid.o flock.o main.o -o app -lsfml-graphics -lsfml-window -lsfml-system
+
+clean:
+	rm app main.o flock.o boid.o
