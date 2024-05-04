@@ -1,10 +1,23 @@
 #include <SFML/Graphics.hpp>
+#include "Boid.h"
+#include "Flock.h"
+
+#include <iostream>
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    int width = 1000;
+    int height = width;
+    int boidCount = 50;
+
+    sf::RenderWindow window(sf::VideoMode(width, height), "SFML works!");
+
+    std::cout << "window created\n";
+
+    Flock *flock = new Flock(boidCount, width, height);
+    std::cout << "flock created\n";
+
+    int loop = 0;
 
     while (window.isOpen())
     {
@@ -16,9 +29,18 @@ int main()
         }
 
         window.clear();
-        window.draw(shape);
+
+        flock->update();
+
+        for (int i = 0; i < boidCount; i++)
+        {
+            window.draw(flock->getBoid(i)->draw());
+        }
+
         window.display();
     }
+
+    delete flock;
 
     return 0;
 }
