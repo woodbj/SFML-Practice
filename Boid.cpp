@@ -19,6 +19,23 @@ Boid::Boid(int width, int height, int id)
     _sprite.setPosition(_pos);
 }
 
+void Boid::update()
+{
+    _pos.x += 1;
+    _pos.y += 1;
+
+    if (_pos.x > _width)
+        _pos.x -= _width;
+    if (_pos.y > _height)
+        _pos.y -= _height;
+    if (_pos.x < 0)
+        _pos.x += _width;
+    if (_pos.y < 0)
+        _pos.y += _height;
+
+    _sprite.setPosition(_pos.x, _pos.y);
+}
+
 void Boid::update(Vector2f *distances, Vector2f *velocities, int size)
 {
     if (_id == 0)
@@ -83,7 +100,6 @@ void Boid::alignment(Vector2f *velocities, int size)
 void Boid::cohesion(Vector2f *distances, int size)
 {
 }
-
 sf::CircleShape Boid::draw()
 {
     return _sprite;

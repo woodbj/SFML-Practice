@@ -32,6 +32,7 @@ public:
     Vector2f getDir(){return _dir;}
     void setDir(Vector2f dir){_dir = dir;}
     void update(Vector2f *distances, Vector2f *velocities, int count);
+    void update();
     void separation(Vector2f *distances, int count);
     void alignment(Vector2f *distances, int count);
     void cohesion(Vector2f *distances, int count);

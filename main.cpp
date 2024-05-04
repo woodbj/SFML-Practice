@@ -6,8 +6,12 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML works!");
+    int w = 1000;
+    int h = 1000;
+    int bc = 25;
+    Flock *flock = new Flock(bc, w, h);
 
+    sf::RenderWindow window(sf::VideoMode(w, h), "SFML works!");
     while (window.isOpen())
     {
         sf::Event event;
@@ -16,8 +20,15 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-        
         window.clear();
+        flock->update();
+
+        for (int i = 0; i < bc; i++)
+        {
+            window.draw(flock->getBoid(i)->draw());
+        }
+
+        
         window.display();
     }
 

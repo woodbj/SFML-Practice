@@ -9,15 +9,9 @@ Boid *Flock::getBoid(int index)
 
 void Flock::update()
 {
-    std::cout << "Updating\n";
     for (int i = 0; i < _size; i++)
     {
-        for (int j = 0; j < _size; j++)
-        {
-            // _otherDistances[j] = _boids[j]->getPos();
-            // _otherVelocities[j] = _boids[j]->getDir();
-        }
-        // _boids[i]->update(_otherDistances, _otherVelocities, _size);
+        _boids[i]->update();
     }
 }
 
