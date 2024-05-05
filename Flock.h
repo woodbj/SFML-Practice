@@ -16,6 +16,9 @@ public:
     void update();
     void updateOld();
     Boid* getBoid(int index);
+    void toggleAlignment();
+    void toggleSeparation();
+    void toggleCohesion();
 };
 
 

@@ -9,21 +9,42 @@ Boid *Flock::getBoid(int index)
 
 void Flock::update()
 {
-    Vector2 dist[_size];
+    Vector2 pos[_size];
     Vector2 vel[_size];
-    Vector2 thisBoid;
     for (int i = 0; i < _size; i++)
     {
-        thisBoid.x = _boids[i]->getxPos();
-        thisBoid.y = _boids[i]->getyPos();
         for (int j = 0; j < _size; j++)
         {
-            dist[j].x = _boids[j]->getxPos();
-            dist[j].y = _boids[j]->getyPos();
+            pos[j].x = _boids[j]->getxPos();
+            pos[j].y = _boids[j]->getyPos();
             vel[j].x = _boids[j]->getxVel();
             vel[j].y = _boids[j]->getyVel();
         }
-        _boids[i]->update(dist, vel, _size);
+        _boids[i]->update(pos, vel, _size);
+    }
+}
+
+void Flock::toggleAlignment()
+{
+    for (int i = 0; i < _size; i++)
+    {
+        _boids[i]->toggleAlignment();
+    }
+}
+
+void Flock::toggleSeparation()
+{
+    for (int i = 0; i < _size; i++)
+    {
+        _boids[i]->toggleSeparation();
+    }
+}
+
+void Flock::toggleCohesion()
+{
+    for (int i = 0; i < _size; i++)
+    {
+        _boids[i]->toggleCohesion();
     }
 }
 

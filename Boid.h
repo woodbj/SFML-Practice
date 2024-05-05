@@ -17,20 +17,24 @@ private:
     int _width;
     int _height;
     int _id;
-    float _maxVel = 5;
+    float _maxVel = 1;
     // Separation
+    bool _separate = true;
     float _sr = 25.f;
-    float _sf = 0.0005f;
+    float _sf = 0.00005f;
     // Alignment
+    bool _align = true;
     float _ar = 100.f;
     float _af = 0.05f;
     // Cohesion
-    float _cr = 100;
-    float _cf = 0.005;
+    bool _cohere = true;
+    float _cr = 100.f;
+    float _cf = 0.00005f;
 
     void normaliseVelocity();
     void constrainPosition();
-    float getDist(Vector2);
+    void scaleVector(Vector2*, float);
+    void drawVelocity(Vector2 pos, Vector2 vel);
 
 public:
     Boid(int, int, int, sf::RenderWindow *);
@@ -43,6 +47,9 @@ public:
     void separation(Vector2 *distances, int count);
     void alignment(Vector2 *dist, Vector2 *vel, int size);
     void cohesion(Vector2 *distances, int count);
+    void toggleSeparation(){_separate = !_separate;}
+    void toggleAlignment(){_align = !_align;}
+    void toggleCohesion(){_cohere = !_cohere;}
 
     sf::CircleShape draw();
 };
