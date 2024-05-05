@@ -11,7 +11,7 @@ private:
     Boid **_boids;
     sf::RenderWindow *_window;
 public:
-    Flock(int size, int width, int height, sf::RenderWindow *window);
+    Flock(int size, sf::RenderWindow *window);
     ~Flock();
     void update();
     void updateOld();

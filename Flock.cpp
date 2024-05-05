@@ -9,16 +9,14 @@ Boid *Flock::getBoid(int index)
 
 void Flock::update()
 {
-    Vector2 pos[_size];
-    Vector2 vel[_size];
+    Vector2f pos[_size];
+    Vector2f vel[_size];
     for (int i = 0; i < _size; i++)
     {
         for (int j = 0; j < _size; j++)
         {
-            pos[j].x = _boids[j]->getxPos();
-            pos[j].y = _boids[j]->getyPos();
-            vel[j].x = _boids[j]->getxVel();
-            vel[j].y = _boids[j]->getyVel();
+            pos[j] = _boids[j]->getPos();
+            vel[j] = _boids[j]->getVel();
         }
         _boids[i]->update(pos, vel, _size);
     }
@@ -48,7 +46,7 @@ void Flock::toggleCohesion()
     }
 }
 
-Flock::Flock(int size, int width, int height, sf::RenderWindow *window)
+Flock::Flock(int size, sf::RenderWindow *window)
 {
     std::cout << "Building flock\n";
     _size = size;
@@ -57,7 +55,7 @@ Flock::Flock(int size, int width, int height, sf::RenderWindow *window)
 
     for (int i = 0; i < _size; i++)
     {
-        _boids[i] = new Boid(width, height, i, window);
+        _boids[i] = new Boid(i, window);
     }
     std::cout << "Flock built\n";
 }

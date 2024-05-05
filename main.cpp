@@ -8,10 +8,10 @@ int main()
 {
     int w = 1000;
     int h = 1000;
-    int bc = 500;
+    int bc = 250;
 
-    sf::RenderWindow window(sf::VideoMode(w, h), "SFML works!");
-    Flock *flock = new Flock(bc, w, h, &window);
+    sf::RenderWindow window(sf::VideoMode(w, h), "BOIDS!");
+    Flock *flock = new Flock(bc, &window);
     sf::Event event;
 
     while (window.isOpen())
@@ -25,11 +25,6 @@ int main()
 
         window.clear();
         flock->update();
-
-        for (int i = 0; i < bc; i++)
-        {
-            window.draw(flock->getBoid(i)->draw());
-        }
 
         window.display();
     }
