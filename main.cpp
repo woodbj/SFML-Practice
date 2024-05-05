@@ -9,11 +9,12 @@ int main()
     int w = 1000;
     int h = 1000;
     int bc = 50;
-    Flock *flock = new Flock(bc, w, h);
+    
 
 
 
     sf::RenderWindow window(sf::VideoMode(w, h), "SFML works!");
+    Flock *flock = new Flock(bc, w, h, &window);
     while (window.isOpen())
     {
         sf::Event event;

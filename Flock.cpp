@@ -7,14 +7,6 @@ Boid *Flock::getBoid(int index)
     return _boids[index];
 }
 
-void Flock::updateOld()
-{
-    for (int i = 0; i < _size; i++)
-    {
-        _boids[i]->update();
-    }
-}
-
 void Flock::update()
 {
     Vector2 dist[_size];
@@ -35,15 +27,16 @@ void Flock::update()
     }
 }
 
-Flock::Flock(int size, int width, int height)
+Flock::Flock(int size, int width, int height, sf::RenderWindow *window)
 {
     std::cout << "Building flock\n";
     _size = size;
+    _window = window;
     _boids = new Boid*[_size];
 
     for (int i = 0; i < _size; i++)
     {
-        _boids[i] = new Boid(width, height, i);
+        _boids[i] = new Boid(width, height, i, window);
     }
     std::cout << "Flock built\n";
 }

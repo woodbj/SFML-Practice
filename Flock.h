@@ -9,8 +9,9 @@ class Flock
 private:
     int _size;
     Boid **_boids;
+    sf::RenderWindow *_window;
 public:
-    Flock(int size, int width, int height);
+    Flock(int size, int width, int height, sf::RenderWindow *window);
     ~Flock();
     void update();
     void updateOld();
