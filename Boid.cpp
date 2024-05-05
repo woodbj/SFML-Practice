@@ -16,13 +16,13 @@ Boid::Boid(int width, int height, int id)
     {
         _sprite.setFillColor(sf::Color::Magenta);
     }
-    _sprite.setPosition(_pos);
+    _sprite.setPosition(_pos.x, _pos.y);
 }
 
 void Boid::update()
 {
-    _pos.x += 1;
-    _pos.y += 1;
+    _pos.x += 5*(2 * (rand() / (1.f * RAND_MAX)) - 1);
+    _pos.y += 5*(2 * (rand() / (1.f * RAND_MAX)) - 1);
 
     if (_pos.x > _width)
         _pos.x -= _width;
@@ -36,14 +36,14 @@ void Boid::update()
     _sprite.setPosition(_pos.x, _pos.y);
 }
 
-void Boid::update(Vector2f *distances, Vector2f *velocities, int size)
+void Boid::update(Vector2 *distances, Vector2 *velocities, int size)
 {
     if (_id == 0)
     {
         _dir.x = 0;
         _dir.y = 0;
 
-        separation(distances, size);
+        // separation(distances, size);
     }
 
     _pos.x += _dir.x;
@@ -58,29 +58,33 @@ void Boid::update(Vector2f *distances, Vector2f *velocities, int size)
     if (_pos.y < 0)
         _pos.y += _height;
 
-    _sprite.setPosition(_pos);
+    _sprite.setPosition(_pos.x, _pos.y);
 }
-void Boid::separation(Vector2f *distances, int size)
+void Boid::separation(Vector2 *distances, int size)
 {
-    Vector2f close;
+    Vector2 close;
     close.x = 0;
     close.y = 0;
     float dist;
+    
     for (int i = 0; i < size; i++)
     {
         dist = sqrt(distances[i].x * distances[i].x + distances[i].y * distances[i].y);
         if (dist < _separationRange)
         {
+            std::cout << "Hit\n";
             close.x += _pos.x - distances[i].x;
             close.y += _pos.y - distances[i].y;
         }
         _dir.x += _avoidFactor * close.x;
         _dir.y += _avoidFactor * close.y;
     }
+        dist = sqrt(_dir.x*_dir.x + _dir.y*_dir.y);
+        if(dist!=0) std::cout << dist << '\n';
 }
-void Boid::alignment(Vector2f *velocities, int size)
+void Boid::alignment(Vector2 *velocities, int size)
 {
-    Vector2f nVel;
+    Vector2 nVel;
     nVel.x = 0;
     nVel.y = 0;
     int neighbours = 0;
@@ -97,7 +101,7 @@ void Boid::alignment(Vector2f *velocities, int size)
 
 
 }
-void Boid::cohesion(Vector2f *distances, int size)
+void Boid::cohesion(Vector2 *distances, int size)
 {
 }
 sf::CircleShape Boid::draw()

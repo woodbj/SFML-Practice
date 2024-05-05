@@ -8,8 +8,10 @@ int main()
 {
     int w = 1000;
     int h = 1000;
-    int bc = 25;
+    int bc = 50;
     Flock *flock = new Flock(bc, w, h);
+
+
 
     sf::RenderWindow window(sf::VideoMode(w, h), "SFML works!");
     while (window.isOpen())
@@ -31,6 +33,8 @@ int main()
         
         window.display();
     }
+
+    delete flock;
 
     return 0;
 }
