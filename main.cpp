@@ -8,13 +8,15 @@ int main()
 {
     int w = 1000;
     int h = 1000;
-    int bc = 50;
+    int bc = 500;
 
     sf::RenderWindow window(sf::VideoMode(w, h), "SFML works!");
     Flock *flock = new Flock(bc, w, h, &window);
+    sf::Event event;
+
     while (window.isOpen())
     {
-        sf::Event event;
+        
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)

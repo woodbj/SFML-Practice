@@ -13,7 +13,7 @@ Boid::Boid(int width, int height, int id, sf::RenderWindow *window)
     _dir.x = 2 * (rand() / (1.f * RAND_MAX)) - 1;
     _dir.y = 2 * (rand() / (1.f * RAND_MAX)) - 1;
     Boid::normaliseVelocity();
-    _sprite = sf::CircleShape(10.f);
+    _sprite = sf::CircleShape(5.f);
     if (id == 0)
     {
         _sprite.setFillColor(sf::Color::Magenta);
@@ -65,7 +65,7 @@ void Boid::update(Vector2 *positions, Vector2 *velocities, int size)
 {
     separation(positions, size);
     alignment(positions, velocities, size);
-    // cohesion(positions, size);
+    cohesion(positions, size);
 
     _pos.x += _dir.x;
     _pos.y += _dir.y;
@@ -75,6 +75,7 @@ void Boid::update(Vector2 *positions, Vector2 *velocities, int size)
 
     _sprite.setPosition(_pos.x, _pos.y);
 }
+
 void Boid::separation(Vector2 *positions, int size)
 {
     Vector2 close;
@@ -88,13 +89,6 @@ void Boid::separation(Vector2 *positions, int size)
         float dist = sqrt(dx * dx + dy * dy);
         if (dist < _sr)
         {
-            
-            {
-                sf::VertexArray lines(sf::LinesStrip, 2);
-                lines[0].position = sf::Vector2f(_pos.x + 10, _pos.y + 10);
-                lines[1].position = sf::Vector2f(positions[i].x + 10, positions[i].y + 10);
-                _window->draw(lines);
-            }
             close.x += _pos.x - positions[i].x;
             close.y += _pos.y - positions[i].y;
         }
@@ -102,6 +96,7 @@ void Boid::separation(Vector2 *positions, int size)
         _dir.y += _sf * close.y;
     }
 }
+
 void Boid::alignment(Vector2 *positions, Vector2 *vel, int size)
 {
     if (!_align)
@@ -131,6 +126,7 @@ void Boid::alignment(Vector2 *positions, Vector2 *vel, int size)
         _dir.y += (avgVel.y - _dir.y) * _af;
     }
 }
+
 void Boid::cohesion(Vector2 *positions, int size)
 {
     if (!_cohere)
@@ -151,15 +147,24 @@ void Boid::cohesion(Vector2 *positions, int size)
             avgPos.y += positions[i].y;
             neighbours++;
         }
-        if (neighbours > 0)
-        {
-            avgPos.x /= neighbours;
-            avgPos.y /= neighbours;
-            _dir.x += (_pos.x - avgPos.x) * _cf;
-            _dir.y += (_pos.y - avgPos.y) * _cf;
-        }
+    }
+    if (neighbours > 0)
+    {
+        avgPos.x /= neighbours;
+        avgPos.y /= neighbours;
+        _dir.x += (_pos.x - avgPos.x) * _cf;
+        _dir.y += (_pos.y - avgPos.y) * _cf;
+
+        // if (_id == 0)
+        // {
+        //     sf::CircleShape centre = sf::CircleShape(10.f);
+        //     centre.setFillColor(sf::Color::Green);
+        //     centre.setPosition(avgPos.x, avgPos.y);
+        //     _window->draw(centre);
+        // }
     }
 }
+
 sf::CircleShape Boid::draw()
 {
     return _sprite;

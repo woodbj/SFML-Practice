@@ -17,10 +17,10 @@ private:
     int _width;
     int _height;
     int _id;
-    float _maxVel = 1;
+    float _maxVel = 2.5;
     // Separation
     bool _separate = true;
-    float _sr = 25.f;
+    float _sr = 8.f;
     float _sf = 0.00005f;
     // Alignment
     bool _align = true;
