@@ -24,7 +24,7 @@ private:
     // Separation
     bool _separate = true;
     float _sr = 2 * _boidSize;
-    float _sf = 0.0001f;
+    float _sf = 0.0005f;
     // Alignment
     bool _align = true;
     float _ar = 100.f;
