@@ -11,53 +11,35 @@ void Flock::update()
 {
     Vector2f pos[_size];
     Vector2f vel[_size];
+    BoidType bt[_size];
+
+    // get position of all boids
+    for (int j = 0; j < _size; j++)
+    {
+        pos[j] = _boids[j]->getPos();
+        vel[j] = _boids[j]->getVel();
+        bt[j] = _boids[j]->getBoidType();
+    }
+
+    // update all boids 
     for (int i = 0; i < _size; i++)
     {
-        for (int j = 0; j < _size; j++)
-        {
-            pos[j] = _boids[j]->getPos();
-            vel[j] = _boids[j]->getVel();
-        }
-        _boids[i]->update(pos, vel, _size);
+        _boids[i]->update(pos, vel, bt, _size);
     }
 }
 
-void Flock::toggleAlignment()
+Flock::Flock(FlockConfig fc, sf::RenderWindow *window)
 {
-    for (int i = 0; i < _size; i++)
-    {
-        _boids[i]->toggleAlignment();
-    }
-}
-
-void Flock::toggleSeparation()
-{
-    for (int i = 0; i < _size; i++)
-    {
-        _boids[i]->toggleSeparation();
-    }
-}
-
-void Flock::toggleCohesion()
-{
-    for (int i = 0; i < _size; i++)
-    {
-        _boids[i]->toggleCohesion();
-    }
-}
-
-Flock::Flock(int size, sf::RenderWindow *window)
-{
-    std::cout << "Building flock\n";
-    _size = size;
+    _size = fc.playCount + fc.predCount + fc.preyCount;
     _window = window;
-    _boids = new Boid*[_size];
+    _boids = new Boid *[_size];
 
-    for (int i = 0; i < _size; i++)
+    for (int i = 0; i < fc.preyCount; i++)
     {
-        _boids[i] = new Boid(i, window);
+        _boids[i] = new PreyBoid(i, window);
     }
-    std::cout << "Flock built\n";
+
+    
 }
 
 Flock::~Flock()

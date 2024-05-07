@@ -8,10 +8,14 @@ int main()
 {
     int w = 1920;
     int h = 1080;
-    int bc = 2;
+
+    FlockConfig fc;
+    fc.preyCount = 2;
+    fc.predCount = 0;
+    fc.playCount = 0;
 
     sf::RenderWindow window(sf::VideoMode(w, h), "BOIDS!");
-    Flock *flock = new Flock(bc, &window);
+    Flock *flock = new Flock(fc, &window);
     sf::Event event;
 
     while (window.isOpen())
@@ -23,9 +27,11 @@ int main()
                 window.close();
         }
 
-        // window.clear();
-        flock->update();
 
+
+
+        window.clear();
+        flock->update();
         window.display();
     }
 

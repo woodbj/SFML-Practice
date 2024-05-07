@@ -1,8 +1,8 @@
-#include "Boid.h"
+#include "PreyBoid.h"
 
 // https://people.ece.cornell.edu/land/courses/ece4760/labs/s2021/Boids/Boids.html#:~:text=Boids%20is%20an%20artificial%20life,very%20simple%20set%20of%20rules.
 
-Boid::Boid(int id, sf::RenderWindow *window)
+PreyBoid::PreyBoid(int id, sf::RenderWindow *window)
 {
     // initialise variables
     _id = id;
@@ -27,12 +27,12 @@ Boid::Boid(int id, sf::RenderWindow *window)
     _sprite = sf::CircleShape(_boidSize);
 }
 
-float Boid::getMagnitude(Vector2f v)
+float PreyBoid::getMagnitude(Vector2f v)
 {
     return sqrt(v.x * v.x + v.y * v.y);
 }
 
-void Boid::update(Vector2f *positions, Vector2f *velocities, int size)
+void PreyBoid::update(Vector2f *positions, Vector2f *velocities, BoidType* bt, int size)
 {
     separation(positions, size);
     alignment(positions, velocities, size);
@@ -49,7 +49,7 @@ void Boid::update(Vector2f *positions, Vector2f *velocities, int size)
     draw();
 }
 
-void Boid::separation(Vector2f *positions, int size)
+void PreyBoid::separation(Vector2f *positions, int size)
 {
     Vector2f close;
     for (int i = 0; i < size; i++)
@@ -62,7 +62,7 @@ void Boid::separation(Vector2f *positions, int size)
     }
 }
 
-void Boid::alignment(Vector2f *positions, Vector2f *vel, int size)
+void PreyBoid::alignment(Vector2f *positions, Vector2f *vel, int size)
 {
     if (!_align)
         return;
@@ -84,7 +84,7 @@ void Boid::alignment(Vector2f *positions, Vector2f *vel, int size)
     }
 }
 
-void Boid::cohesion(Vector2f *positions, int size)
+void PreyBoid::cohesion(Vector2f *positions, int size)
 {
     if (!_cohere)
         return;
@@ -107,7 +107,7 @@ void Boid::cohesion(Vector2f *positions, int size)
     }
 }
 
-void Boid::margins()
+void PreyBoid::margins()
 {
     // Vector2f tl(_ml, _mt);
     // Vector2f tr(_mr, _mt);
@@ -133,13 +133,13 @@ void Boid::margins()
         _dir.y += _tf;
 }
 
-void Boid::scaleVector(Vector2f *v, float scale)
+void PreyBoid::scaleVector(Vector2f *v, float scale)
 {
     *v /= (float)sqrt(v->x * v->x + v->y * v->y);
     *v *= scale;
 }
 
-void Boid::constrainPosition()
+void PreyBoid::constrainPosition()
 {
 
     if (_pos.x > _width)
@@ -152,7 +152,7 @@ void Boid::constrainPosition()
         _pos.y += _height;
 }
 
-void Boid::draw()
+void PreyBoid::draw()
 {
     _sprite.setPosition(_pos.x, _pos.y);
     _window->draw(_sprite);
