@@ -19,26 +19,26 @@ private:
     int _width;
     int _height;
     int _id;
-    float _maxVel = 2.5;
-    float _boidSize = 5;
+    float _maxVel = 3;
+    float _boidSize = 1;
     // Separation
     bool _separate = true;
-    float _sr = 2 * _boidSize;
-    float _sf = 0.0005f;
+    float _sr = 50;  // separation range
+    float _sf = 0.0005f;        // separation factor
     // Alignment
     bool _align = true;
-    float _ar = 100.f;
-    float _af = 0.05f;
+    float _ar = 350.f;          // alignment range
+    float _af = 0.02f;          // alignment factor
     // Cohesion
     bool _cohere = true;
-    float _cr = _ar;
-    float _cf = 0.00005f;
+    float _cr = _ar;            // cohesion range
+    float _cf = 0.00005f;       // cohesion factor
     // Margins
-    float _ml = 75;
+    float _ml = 100;             // margin to turn from
     float _mr;
     float _mt;
     float _mb;
-    float _tf = 0.2;
+    float _tf = 0.2;            // turn factor
 
     void scaleVector(Vector2f *, float scale);
     void constrainPosition();

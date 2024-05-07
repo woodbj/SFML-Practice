@@ -9,19 +9,20 @@ Boid::Boid(int id, sf::RenderWindow *window)
     _window = window;
     _width = _window->getSize().x;
     _height = _window->getSize().y;
-    
+
     // initialise position
     _pos.x = rand() % _width;
     _pos.y = rand() % _height;
     _dir.x = 2 * (rand() / (1.f * RAND_MAX)) - 1;
     _dir.y = 2 * (rand() / (1.f * RAND_MAX)) - 1;
-    scaleVector(&_dir, _maxVel);
+    float velocity = rand() / (1.f * RAND_MAX);
+    scaleVector(&_dir, velocity * _maxVel);
 
     // initialise boundaries
     _mr = _width - _ml;
     _mt = _ml;
     _mb = _height - _ml;
-    
+
     // give a shape
     _sprite = sf::CircleShape(_boidSize);
 }
@@ -36,8 +37,12 @@ void Boid::update(Vector2f *positions, Vector2f *velocities, int size)
     separation(positions, size);
     alignment(positions, velocities, size);
     cohesion(positions, size);
-    scaleVector(&_dir, _maxVel);
+
+    
+
     margins();
+
+    scaleVector(&_dir, _maxVel);
 
     _pos += _dir;
 
@@ -98,7 +103,7 @@ void Boid::cohesion(Vector2f *positions, int size)
     if (neighbours > 0)
     {
         avgPos /= (float)neighbours;
-        _dir += (_pos - avgPos) * _cf;
+        _dir += -(_pos - avgPos) * _cf;
     }
 }
 

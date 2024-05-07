@@ -6,9 +6,9 @@
 
 int main()
 {
-    int w = 1000;
-    int h = 1000;
-    int bc = 250;
+    int w = 1920;
+    int h = 1080;
+    int bc = 2;
 
     sf::RenderWindow window(sf::VideoMode(w, h), "BOIDS!");
     Flock *flock = new Flock(bc, &window);
@@ -23,7 +23,7 @@ int main()
                 window.close();
         }
 
-        window.clear();
+        // window.clear();
         flock->update();
 
         window.display();
